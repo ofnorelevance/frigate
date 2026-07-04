@@ -430,6 +430,11 @@ class FrigateConfig(FrigateBaseModel):
         title="Safe mode",
         description="When enabled, start Frigate in safe mode with reduced features for troubleshooting.",
     )
+    storage_space_monitor: bool = Field(
+        default=True,
+        title="Storage space monitor",
+        description="When disabled, no monitoring of available space is done and thus no cleanup triggered.",
+    )
 
     # Fields that install global state should be defined first, so that their validators run first.
     environment_vars: EnvVars = Field(

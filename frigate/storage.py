@@ -108,6 +108,11 @@ class StorageMaintainer(threading.Thread):
         """Return if storage needs cleanup."""
         # currently runs cleanup if less than 1 hour of space is left
         # disk_usage should not spin up disks
+        if self.config.storage_space_monitor is False:
+            logger.debug(
+                "Storage cleanup check ignored as requested by config.storage_space_monitor"
+            )
+            return False
         hourly_bandwidth = sum(
             [b["bandwidth"] for b in self.camera_storage_stats.values()]
         )
