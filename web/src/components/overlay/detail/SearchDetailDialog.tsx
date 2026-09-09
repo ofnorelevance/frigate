@@ -1240,10 +1240,14 @@ function ObjectDetailsTab({
     search?.plus_id ? "submitted" : "reviewing",
   );
 
-  useEffect(
-    () => setState(search?.plus_id ? "submitted" : "reviewing"),
-    [search],
-  );
+  // a submission request outlives the object it was made for, so the
+  // response handler needs to know which object is on screen now
+  const displayedIdRef = useRef(search?.id);
+
+  useEffect(() => {
+    displayedIdRef.current = search?.id;
+    setState(search?.plus_id ? "submitted" : "reviewing");
+  }, [search]);
 
   const onSubmitToPlus = useCallback(
     async (falsePositive: boolean) => {
@@ -1251,30 +1255,51 @@ function ObjectDetailsTab({
         return;
       }
 
-      falsePositive
-        ? axios.put(`events/${search.id}/false_positive`)
-        : axios.post(`events/${search.id}/plus`, {
-            include_annotation: 1,
-          });
+      const eventId = search.id;
 
-      setState("submitted");
-      setSearch({ ...search, plus_id: "new_upload" });
-      mutate(
-        (key) => isEventsKey(key),
-        (currentData: SearchResult[][] | SearchResult[] | undefined) =>
-          mapSearchResults(currentData, (event) =>
-            event.id === search.id
-              ? { ...event, plus_id: "new_upload" }
-              : event,
-          ),
-        {
-          optimisticData: true,
-          rollbackOnError: true,
-          revalidate: false,
-        },
-      );
+      try {
+        const resp = falsePositive
+          ? await axios.put(`events/${eventId}/false_positive`)
+          : await axios.post(`events/${eventId}/plus`, {
+              include_annotation: 1,
+            });
+
+        if (resp.status !== 200 || !resp.data?.success) {
+          throw new Error();
+        }
+
+        if (displayedIdRef.current === eventId) {
+          setState("submitted");
+        }
+
+        mutate(
+          (key) => isEventsKey(key),
+          (currentData: SearchResult[][] | SearchResult[] | undefined) =>
+            mapSearchResults(currentData, (event) =>
+              event.id === eventId
+                ? { ...event, plus_id: "new_upload" }
+                : event,
+            ),
+          {
+            optimisticData: true,
+            rollbackOnError: true,
+            revalidate: false,
+          },
+        );
+      } catch {
+        if (displayedIdRef.current === eventId) {
+          setState("reviewing");
+        }
+
+        // the toast is not object specific, so it is always shown to avoid
+        // silently dropping a failed submission
+        toast.error(
+          t("explore.plus.review.toast.error", { ns: "components/dialog" }),
+          { position: "top-center" },
+        );
+      }
     },
-    [search, mutate, mapSearchResults, setSearch, isEventsKey],
+    [search, mutate, mapSearchResults, isEventsKey, t],
   );
 
   const popoverContainerRef = useRef<HTMLDivElement | null>(null);

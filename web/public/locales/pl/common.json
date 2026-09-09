@@ -167,7 +167,8 @@
     "saveAll": "Zapisz wszystkie",
     "savingAll": "Zapisywanie wszystkich…",
     "undoAll": "Cofnij wszystko",
-    "retry": "Powtórz"
+    "retry": "Powtórz",
+    "resetToGlobal": "Przywróć ustawienie globalne"
   },
   "menu": {
     "system": "System",
@@ -220,7 +221,8 @@
       "ur": "اردو (Urdu)",
       "hr": "Hrvatski (Chorwacki)",
       "zhHant": "繁體中文 (Chiński Tradycyjny)",
-      "bs": "Bosanski (Bośniacki)"
+      "bs": "Bosanski (Bośniacki)",
+      "be": "Беларуская (Białoruski)"
     },
     "appearance": "Wygląd",
     "darkMode": {
@@ -274,7 +276,10 @@
     "settings": "Ustawienia",
     "export": "Eksportuj",
     "classification": "Klasyfikacja",
-    "profiles": "Profile"
+    "profiles": "Profile",
+    "actions": "Akcje",
+    "features": "Funkcje",
+    "chat": "Czat"
   },
   "role": {
     "viewer": "Przeglądający",
@@ -328,5 +333,10 @@
   "field": {
     "optional": "Opcjonalny",
     "internalID": "Wewnętrzny identyfikator używany przez Frigate w konfiguracji i bazie danych"
+  },
+  "no_items": "Brak elementów",
+  "validation_errors": "Błędy walidacji",
+  "credentialField": {
+    "savedPlaceholder": "Zapisano — pozostaw puste, aby zachować bieżącą wartość"
   }
 }

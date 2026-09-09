@@ -58,7 +58,9 @@
   },
   "camera": {
     "enable": "啟用鏡頭",
-    "disable": "停用鏡頭"
+    "disable": "停用鏡頭",
+    "turnOn": "開啟攝影機",
+    "turnOff": "關閉攝影機"
   },
   "muteCameras": {
     "enable": "所有鏡頭靜音",
@@ -104,7 +106,7 @@
     "start": "開始應需錄影",
     "started": "開始手動應需錄影。",
     "failedToStart": "手動開始應需錄影失敗。",
-    "recordDisabledTips": "因為此鏡頭的錄影功能被停用或限制，因此僅會保存截圖。",
+    "recordDisabledTips": "因為此鏡頭的錄影功能被停用或限制，因此僅會儲存截圖。",
     "end": "結束應需錄影",
     "ended": "已結束手動應需錄影。",
     "failedToEnd": "結束手動應需錄影失敗。"
@@ -151,7 +153,8 @@
     "snapshots": "截圖",
     "audioDetection": "音訊偵測",
     "autotracking": "自動追蹤",
-    "transcription": "音訊轉錄"
+    "transcription": "音訊轉錄",
+    "camera": "攝影機"
   },
   "history": {
     "label": "顯示歷史影像"
@@ -183,7 +186,7 @@
   },
   "noCameras": {
     "title": "未設定攝影機",
-    "description": "準備開始連線攝影機至 Frigate 。",
+    "description": "準備開始連線攝影機至 Frigate。",
     "buttonText": "新增攝影機",
     "restricted": {
       "title": "無可用攝影機",
